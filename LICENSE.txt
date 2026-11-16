@@ -1,0 +1,51 @@
+AnarchyLands Free Binary Distribution License — version 1.0
+
+Copyright (c) AnarchyLands CZ/SK - g0dy69.
+
+This license covers copyrightable code and materials owned by the author in
+RollPlugin. It does not relicense third-party software, Minecraft, Bukkit,
+Spigot, Paper, Java, or their APIs. Third-party rights and mandatory applicable
+law prevail over conflicting terms. This is a source-closed freeware license,
+not an OSI-approved open-source license.
+
+1. Free use
+You may download and run official RollPlugin binaries without charge on your
+own Minecraft servers, including monetized servers. You may edit configuration
+files and translations for your server. No license key or telemetry is required.
+
+2. Modification and free redistribution
+You may modify the plugin for your own use. You may redistribute unmodified or
+modified plugin JARs only free of charge, with this license, visible attribution
+to "AnarchyLands CZ/SK - g0dy69", and the original copyright notices retained.
+Modified JARs must be clearly described as unofficial modified versions, must
+identify their modifications, and must not be represented as official releases
+or endorsed by AnarchyLands CZ/SK. This permission does not grant access to the
+author's private source repository.
+
+3. Restrictions
+You may not sell, sublicense for payment, paywall, or charge a download fee for
+the plugin or a modified plugin without prior written permission from the
+author. You may not claim authorship of the original code, remove required
+attribution or this license, or use the author's branding to imply endorsement
+of an unofficial version. Running the plugin on a monetized server is not a
+resale of the plugin. Rights not expressly granted are reserved.
+
+4. Source code and contributions
+The author is not granting public access to the private source repository by
+distributing a binary under this license. Optional access or contributions may
+be agreed separately. Bug reports and proposals may be submitted through the
+official issue tracker. Third-party license obligations are not waived here.
+
+5. No warranty
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NONINFRINGEMENT. TO THE EXTENT PERMITTED BY LAW, THE AUTHOR IS NOT LIABLE FOR
+CLAIMS, DAMAGES, DATA LOSS, OR OTHER LIABILITY ARISING FROM USE OR DISTRIBUTION.
+Always maintain backups and test changes on a non-production server.
+
+6. Exceptions and permission
+Nothing here limits rights that cannot lawfully be restricted. Permissions
+beyond these terms must be granted by the author in writing. This text is not
+legal advice and does not make claims about the licensing of independent
+server implementations or whether a particular third-party integration creates
+a derivative work.

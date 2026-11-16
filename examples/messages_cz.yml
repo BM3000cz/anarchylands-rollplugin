@@ -1,0 +1,65 @@
+# RollPlugin messages. Keep placeholder names unchanged.
+plugin.enabled: RollPlugin enabled!
+plugin.disabled: RollPlugin disabled!
+plugin.start-failed: 'RollPlugin could not start: '
+plugin.start-error: Startup failure
+duel.shutdown: Duel byl ukončen při vypnutí pluginu.
+duel.locked: '&cVsazený item je do přijetí duelu uzamčený.'
+duel.no-drop: '&cBěhem čekání na duel nelze zahazovat itemy.'
+duel.no-enderchest: '&cBěhem čekání na duel nelze otevřít /ec.'
+plugin.reloaded: '&8✦ &lROLL &8» &aConfig reloaded.'
+duel.await-accept: '&eNejdřív musí být duel přijat pomocí /rollaccept.'
+command.no-permission: Nemáš právo na použití tohoto příkazu.
+command.player-only: Tento příkaz může použít jen hráč.
+command.duel-usage: '&ePoužití: /rollduel <hráč>'
+duel.already-in: '&cUž se účastníš jiného duelu.'
+duel.offline: '&cTento hráč není online.'
+duel.self: '&cNemůžeš vyzvat sám sebe.'
+duel.opponent-busy: '&cTento hráč se už účastní jiného duelu.'
+duel.stake-required: '&cMusíš držet vsazený item v hlavní ruce.'
+duel.no-invitation: '&cNemáš žádnou čekající duelovou výzvu.'
+duel.challenger-offline: Duel byl zrušen, protože vyzyvatel není online.
+duel.stake-changed: Duel byl zrušen, protože se změnil vklad vyzyvatele.
+duel.accept-stake-required: '&cMusíš držet svůj vklad v hlavní ruce.'
+duel.accepted: '&aDuel přijat. Každý napište &f/roll&a; za 60 sekund plugin hodí za neaktivní hráče. Duelové hody nedávají standardní odměny.'
+duel.cancel-only-pending: '&cMůžeš zrušit pouze svůj dosud nepřijatý duel.'
+command.players-only: Tenhle příkaz může použít jen hráč.
+command.admin-usage: 'Použití: /rolladmin <hodnota>'
+command.invalid-number: Neplatné číslo.
+command.number-range: Hodnota musí být v rozmezí 1-101.
+roll.admin-suffix: ' &7(admin)'
+autoroll.stopped: '&cAutoroll zastaven.'
+autoroll.disabled: '&cAutoroll je zakázán (interval <= 0).'
+duel.invitation-expired: Duelová výzva vypršela po 60 sekundách.
+duel.already-rolled: '&cUž jsi v tomto duelu hodil.'
+duel.auto-suffix: ' &7(automatický hod)'
+duel.disconnected: Duel byl ukončen, protože se jeden z hráčů odpojil.
+duel.timeout: '&7Časový limit 60 sekund vypršel; chybějící hody provedl plugin.'
+duel.refunded: ' Vklady byly vráceny.'
+refund.partial: '&eČást vráceného duelového vkladu čeká na uvolnění místa v inventáři.'
+refund.delivered: '&aByl ti vrácen duelový vklad z ukončeného duelu.'
+refund.pending: '&eDuelový vklad čeká na volné místo v inventáři.'
+refund.save-error: 'Nelze uložit vrácení duelových vkladů: '
+plugin.rewards-header: === Loaded rewards ===
+plugin.normal-rewards: 'Normal: '
+plugin.vip-rewards: 'VIP:    '
+plugin.invalid-odds: jackpot-101.one-in must be positive; using default odds.
+duel.player-left: Duel byl ukončen, protože se %player% odpojil.
+duel.request-sent: '&aPoslal jsi duel hráči &f%player%&a. Tvůj vklad je na 60 sekund uzamčen.'
+duel.request-received: '&e%player% tě vyzval k roll duelu. Drž vklad v ruce a napiš /rollaccept nebo /rolldeny.'
+duel.denied: '%player% duel odmítl.'
+duel.cancelled: '%player% zrušil duelovou výzvu.'
+autoroll.started: '&aAutoroll spuštěn (interval: %seconds%s).'
+duel.roll: '&eDuelový hod hráče &f%player%&e: &6%roll%'
+duel.winner: '&6%player% vyhrál %first% : %second% a získává oba vklady.'
+duel.draw: '&eRemíza %first% : %second%. Oba vklady byly vráceny.'
+roll.broadcast: '&8[&aROLL&8] &f%player% hodil &a%roll%'
+roll.jackpot: '&6JACKPOT! &f%player% hodil &6%roll%!'
+roll.server: '&8[ROLL] &fServer hodil &6%roll%'
+roll.autoroll: '&8[AUTO-ROLL] &f%player% hodil &b%roll%'
+roll.cooldown: '&cPřed dalším hodem počkej %time%s.'
+discord.title: '%player% hodil %roll%!'
+metrics.start-failed: 'Nepodařilo se spustit statistiky bStats; plugin bude pokračovat bez statistik: '
+duel.opponent-no-permission: '&cHráč %player% nemá oprávnění účastnit se duelů.'
+duel.permission-revoked: '&cVýzva k duelu zrušena: některý z hráčů už nemá oprávnění k duelu.'
+duel.player-disconnected: "&e%player% se odpojil. Duel pokračuje; chybějící hody doplní časový limit."

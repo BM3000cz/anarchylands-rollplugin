@@ -1,0 +1,103 @@
+# RollPlugin veřejná edice — AnarchyLands CZ/SK
+# Plugin používá jako aktivní konfiguraci config.yml; jiné názvy jsou šablony.
+# config_cs.yml je šablona s českými komentáři a shodným nastavením.
+# Pro použití šablony ji přejmenujte na config.yml (původní soubor nejprve zálohujte).
+# Pro české zprávy nastavte language: cz (nebo cs), poté použijte /rollreload.
+# Zprávy lze upravit v souborech messages_en.yml / messages_cz.yml.
+language: en
+
+# Počet sekund mezi běžnými hody hráče. Nula vypne cooldown.
+cooldown: 600
+# Počet sekund mezi hody /autoroll. Nulová nebo záporná hodnota autoroll vypne.
+# Autoroll se pozastaví, pokud se hráč účastní duelu.
+autoroll-interval: 60
+# Interval plánovaných konzolových/serverových hodů v sekundách. Nula je vypne.
+# Serverové hody NESPOUŠTĚJÍ příkazy odměn za čísla. Mohou spustit Order 66,
+# pouze pokud je execute-order.enabled výslovně true a padne číslo 66.
+server-roll-interval: 0
+
+jackpot-101:
+  # Nezávislá šance 1 ku N na číslo 101; jinak padne číslo od 1 do 100.
+  one-in: 100000
+
+# NEBEZPEČÍ: VOLITELNÉ ZABITÍ VŠECH HRÁČŮ. Při nové instalaci je vypnuté.
+# Odpovídající běžný hod hráče/autoroll zabije VŠECHNY ONLINE HRÁČE ve VŠECH SVĚTECH.
+# Při výslovném zapnutí může událost spustit také plánovaný serverový hod 66.
+# Plugin při těchto úmrtích zachová inventář a úroveň XP a odstraní vypadlé
+# předměty/XP. Jiné pluginy mohou zpracování smrti změnit; propojení nejprve otestujte.
+# Duelové hody tuto událost ani odměny za čísla nikdy nespouštějí.
+execute-order:
+  enabled: false
+  numbers: [66]
+
+# NEBEZPEČÍ: VOLITELNÉ ZABITÍ HÁZEJÍCÍHO HRÁČE. Při nové instalaci je vypnuté.
+# Odpovídající běžný hod hráče/autoroll zabije POUZE HÁZEJÍCÍHO HRÁČE.
+# Inventář a úroveň XP zůstanou zachovány; plugin odstraní vypadlé předměty/XP.
+# Plánované serverové hody ani duelové hody tuto událost nikdy nespouštějí.
+self-kill:
+  enabled: false
+  numbers: [27]
+
+# Volitelný Discord webhook.
+# Výslovně jej zapněte A nastavte vlastní oficiální HTTPS URL Discord webhooku.
+# Prázdná/neplatná URL ponechá propojení vypnuté.
+# Odesílají se pouze výsledky s nakonfigurovanou číselnou položkou odměny.
+# Síťové úlohy jsou omezené; přetížení/chyba nikdy neblokuje herní ticky.
+discord-enabled: false
+discord-webhook-url: ''
+
+# Volitelné statistiky bStats (ID pluginu 35353): počty serverů/hráčů, software,
+# verze pluginu/Java/OS, informace o CPU a náhodný identifikátor serveru.
+# Neodesílají se jména hráčů, chat, inventáře ani vlastní herní statistiky.
+# Pro vypnutí statistik tohoto pluginu nastavte enabled: false zde a /rollreload.
+# Globální vypnutí: plugins/bStats/config.yml -> enabled: false, poté restart.
+# Další informace: https://bstats.org/docs/server-owners
+metrics:
+  enabled: true
+
+# Příkazy odměn spouští KONZOLE. Upravovat je mají pouze důvěryhodní správci.
+# Zástupný symbol: %player% (funguje i starší &playername). Bez úvodního lomítka.
+# Použijte vanilla příkazy nebo příkazy pluginů nainstalovaných na vlastním serveru.
+rewards:
+  1:
+    - 'minecraft:give %player% minecraft:golden_apple 1'
+  50:
+    - 'minecraft:give %player% minecraft:golden_apple 4'
+  99:
+    - 'minecraft:give %player% minecraft:ender_chest 1'
+  100:
+    - 'minecraft:give %player% minecraft:diamond 4'
+    - 'minecraft:experience add %player% 100 points'
+  101:
+    - 'minecraft:give %player% minecraft:enchanted_golden_apple 1'
+    - 'minecraft:give %player% minecraft:diamond 16'
+    - 'minecraft:give %player% minecraft:ender_chest 1'
+
+# Volitelná starší přepsání šablon zpráv (bez nich se použije jazykový soubor):
+# handleRoll, handleAutoRoll, server-roll-message, cooldown-message,
+# jackpot-101.message. Symboly %player%, %roll%, %time% ponechte beze změny.
+# Existující konfigurace se nepřepisují; původní zapnuté volby je nutné zkontrolovat.
+
+# ADMIN PŘÍKAZ: /rolladmin <number>
+# Vynutí vlastní výsledek hodu na celé číslo od 1 do 101, např. /rolladmin 27.
+# Vyžaduje roll.admin (výchozí pro operátory); používá jej hráč, nikoli konzole.
+# Mimo duel spustí nakonfigurované odměny a zapnuté smrtící efekty.
+# V aktivním duelu místo toho odešle vlastní vynucený duelový výsledek; běžné odměny
+# ani speciální smrtící efekty se nespustí. Oprávnění svěřte jen důvěryhodnému týmu.
+
+# ZNÁMÉ OMEZENÍ 1.2.4: náhlý pád může ztratit aktivní duelové vklady nebo přerušit
+# doručení (chybějící/duplicitní předměty). Běžné vypnutí má cestu pro vrácení;
+# pending-duel-refunds.yml neobsahuje všechny aktivní vklady.
+# Doporučení správci najdete v KNOWN-ISSUES_cs.md v distribučním balíčku.
+
+# PŘÍSTUP K DUELŮM: oba hráči potřebují roll.use A roll.duel pro výzvu/přijetí.
+# roll.duel je výchozí true. Zakažte jej ve správci oprávnění pro skupinu/hráče;
+# běžné hody a autoroll tím nevypnete.
+# Po odebrání roll.duel lze výzvu odmítnout/zrušit; již přijatý duel lze dokončit
+# s roll.use. Změna oprávnění sama neodebírá vklady.
+
+# Cooldown běžných hodů zůstává při reconnectu; restart serveru jej resetuje.
+# Autoroll před každým hodem vyžaduje roll.use. Reload zastaví vypnuté autorolly
+# nebo upraví interval již zapnutým a oprávněným hráčům; ostatním jej nezapíná.
+# Přijaté duely po odpojení pokračují se stejnými hody a původním limitem.
+# Chybějící hody se doplní i offline; výplata čeká na připojení hráče.

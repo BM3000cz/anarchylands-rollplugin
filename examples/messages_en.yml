@@ -1,0 +1,65 @@
+# RollPlugin messages. Keep placeholder names unchanged.
+plugin.enabled: RollPlugin enabled!
+plugin.disabled: RollPlugin disabled!
+plugin.start-failed: 'RollPlugin could not start: '
+plugin.start-error: Startup failure
+duel.shutdown: The duel was cancelled because the plugin is stopping.
+duel.locked: '&cYour stake is locked until the duel is accepted.'
+duel.no-drop: '&cYou cannot drop items while a duel invitation is pending.'
+duel.no-enderchest: '&cYou cannot open /ec while a duel invitation is pending.'
+plugin.reloaded: '&aRollPlugin configuration and language reloaded.'
+duel.await-accept: '&eThe duel must first be accepted with /rollaccept.'
+command.no-permission: '&cYou do not have permission to use this command.'
+command.player-only: '&cOnly a player can use this command.'
+command.duel-usage: '&eUsage: /rollduel <player>'
+duel.already-in: '&cYou are already participating in a duel.'
+duel.offline: '&cThat player is not online.'
+duel.self: '&cYou cannot challenge yourself.'
+duel.opponent-busy: '&cThat player is already participating in a duel.'
+duel.stake-required: '&cHold your stake in your main hand.'
+duel.no-invitation: '&cYou have no pending duel invitation.'
+duel.challenger-offline: The duel was cancelled because the challenger is offline.
+duel.stake-changed: The duel was cancelled because the challenger's stake changed.
+duel.accept-stake-required: '&cHold your stake in your main hand.'
+duel.accepted: '&aDuel accepted. Both players: use &f/roll&a. After 60 seconds missing rolls are automatic. Duel rolls do not give standard rewards.'
+duel.cancel-only-pending: '&cYou can only cancel your own unaccepted challenge.'
+command.players-only: '&cOnly a player can use this command.'
+command.admin-usage: '&eUsage: /rolladmin <number>'
+command.invalid-number: '&cInvalid number.'
+command.number-range: '&cThe number must be between 1 and 101.'
+roll.admin-suffix: ' &7(admin)'
+autoroll.stopped: '&cAutoroll stopped.'
+autoroll.disabled: '&cAutoroll is disabled (interval must be positive).'
+duel.invitation-expired: The duel invitation expired after 60 seconds.
+duel.already-rolled: '&cYou have already rolled in this duel.'
+duel.auto-suffix: ' &7(automatic roll)'
+duel.disconnected: The duel was cancelled because a player disconnected.
+duel.timeout: '&7The 60-second limit expired; missing rolls were automatic.'
+duel.refunded: ' Stakes were returned.'
+refund.partial: '&eSome duel items are queued. Free inventory space and reconnect to collect them.'
+refund.delivered: '&aYour pending duel items were returned.'
+refund.pending: '&eDuel items are queued. Free inventory space and reconnect to collect them.'
+refund.save-error: 'Cannot save pending duel refunds: '
+plugin.rewards-header: === Loaded rewards ===
+plugin.normal-rewards: 'Normal: '
+plugin.vip-rewards: 'VIP:    '
+plugin.invalid-odds: jackpot-101.one-in must be positive; using default odds.
+duel.player-left: The duel was cancelled because %player% disconnected.
+duel.request-sent: '&aChallenge sent to &f%player%&a. Your stake is locked for 60 seconds.'
+duel.request-received: '&e%player% challenged you to a roll duel. Hold your stake and use /rollaccept or /rolldeny.'
+duel.denied: '%player% declined the duel.'
+duel.cancelled: '%player% cancelled the duel invitation.'
+autoroll.started: '&aAutoroll started (interval: %seconds%s).'
+duel.roll: '&eDuel roll by &f%player%&e: &6%roll%'
+duel.winner: '&6%player% won %first% : %second% and receives both stakes.'
+duel.draw: '&eDraw %first% : %second%. Both stakes were returned.'
+roll.broadcast: '&8[&aROLL&8] &f%player% rolled &a%roll%'
+roll.jackpot: '&6JACKPOT! &f%player% rolled &6%roll%!'
+roll.server: '&8[ROLL] &fThe server rolled &6%roll%'
+roll.autoroll: '&8[AUTO-ROLL] &f%player% rolled &b%roll%'
+roll.cooldown: '&cWait %time%s before rolling again.'
+discord.title: '%player% rolled %roll%!'
+metrics.start-failed: 'Could not initialize bStats metrics; the plugin will continue without metrics: '
+duel.opponent-no-permission: '&c%player% is not allowed to participate in duels.'
+duel.permission-revoked: '&cDuel invitation cancelled: a participant no longer has permission to duel.'
+duel.player-disconnected: "&e%player% disconnected. The duel remains active; missing rolls are generated at its timeout."

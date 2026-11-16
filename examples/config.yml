@@ -1,0 +1,102 @@
+# RollPlugin public edition — AnarchyLands CZ/SK
+# The plugin uses config.yml as its active configuration; other names are templates.
+# config_cs.yml is the Czech-commented template with identical settings.
+# To use a template, rename it to config.yml (back up your current file first).
+# Set language: cz (or cs) for Czech messages, then /rollreload.
+# Edit messages_en.yml / messages_cz.yml to customize messages.
+language: en
+
+# Seconds between normal player rolls. Zero disables the cooldown.
+# Cooldowns survive reconnects while the server runs; a server restart resets them.
+cooldown: 600
+# Seconds between /autoroll rolls. A non-positive value disables autoroll.
+# Autoroll pauses while a player participates in a duel.
+# Each scheduled roll requires roll.use. Reload stops disabled autorolls or
+# reapplies the interval to existing eligible opt-ins; it never opts other players in.
+autoroll-interval: 60
+# Scheduled console/server roll interval in seconds. Zero disables it.
+# Server rolls do NOT execute numeric reward commands. They can trigger Order 66
+# only when execute-order.enabled is explicitly true and the result is 66.
+server-roll-interval: 0
+
+jackpot-101:
+  # Independent 1-in-N chance of 101; otherwise the result is 1-100.
+  one-in: 100000
+
+# DANGER: OPTIONAL ALL-PLAYER DEATH EVENT. Disabled on fresh installations.
+# Matching standard player/autoroll results kill ALL ONLINE PLAYERS in ALL WORLDS.
+# Scheduled server roll 66 can also trigger this when explicitly enabled.
+# The plugin keeps inventory and XP level, and clears item/XP drops for these
+# deaths. Other plugins may alter death handling; test integrations first.
+# Duel rolls never trigger this event or numeric rewards.
+execute-order:
+  enabled: false
+  numbers: [66]
+
+# DANGER: OPTIONAL SELF-DEATH EVENT. Disabled on fresh installations.
+# Matching standard player/autoroll results kill ONLY THE ROLLER.
+# Inventory and XP level are kept; item/XP drops are cleared by this plugin.
+# Scheduled server rolls and duel rolls never trigger self-death.
+self-kill:
+  enabled: false
+  numbers: [27]
+
+# Optional Discord webhook.
+# Enable explicitly AND set your own official HTTPS Discord webhook URL.
+# Empty/invalid URLs leave the integration disabled.
+# Only results with configured numeric reward entries are reported.
+discord-enabled: false
+discord-webhook-url: ''
+
+# Optional bStats usage metrics (plugin ID 35353): server/player counts, software,
+# plugin/Java/OS versions, CPU details and a random server identifier.
+# No player names, chat, inventories or custom gameplay charts are submitted.
+# Set enabled: false here, then /rollreload, to stop this plugin's metrics.
+# Global opt-out: plugins/bStats/config.yml -> enabled: false, then restart.
+# More information: https://bstats.org/docs/server-owners
+metrics:
+  enabled: true
+
+# Reward commands execute as CONSOLE. Only trusted administrators should edit.
+# Placeholder: %player% (legacy &playername is also accepted). No leading slash.
+# Use vanilla commands or commands from plugins installed on your own server.
+rewards:
+  1:
+    - 'minecraft:give %player% minecraft:golden_apple 1'
+  50:
+    - 'minecraft:give %player% minecraft:golden_apple 4'
+  99:
+    - 'minecraft:give %player% minecraft:ender_chest 1'
+  100:
+    - 'minecraft:give %player% minecraft:diamond 4'
+    - 'minecraft:experience add %player% 100 points'
+  101:
+    - 'minecraft:give %player% minecraft:enchanted_golden_apple 1'
+    - 'minecraft:give %player% minecraft:diamond 16'
+    - 'minecraft:give %player% minecraft:ender_chest 1'
+
+# Optional legacy template overrides (omit to use the language file):
+# handleRoll, handleAutoRoll, server-roll-message, cooldown-message,
+# jackpot-101.message. Keep %player%, %roll%, %time% placeholders unchanged.
+# Existing configs are not overwritten; old opt-in settings must be reviewed.
+
+# ADMIN COMMAND: /rolladmin <number>
+# Forces your own roll result to an integer from 1 to 101, e.g. /rolladmin 27.
+# Requires roll.admin (operators by default); usable by players, not the console.
+# Outside a duel, it executes configured rewards and enabled death effects.
+# In an active duel, it submits your forced duel result instead; no normal rewards
+# or special death effects run. Give this permission only to trusted staff.
+
+# KNOWN ISSUE IN 1.2.4: an abrupt crash can lose active duel stakes or interrupt
+# item delivery (missing/duplicate items). Normal shutdown has a refund path;
+# pending-duel-refunds.yml does not contain all active stakes.
+# See KNOWN-ISSUES.md for details.
+
+# DUEL ACCESS: both players need roll.use AND roll.duel to create/accept a duel.
+# roll.duel defaults to true. Deny it in your permission manager to disable duels
+# for a group/player without disabling normal rolls or autoroll.
+# Removing roll.duel still allows denying/cancelling pending invitations; already
+# accepted duels can finish with roll.use. Permission changes do not seize stakes.
+
+# Accepted duels survive disconnects with their recorded rolls and original timeout.
+# Missing rolls are generated at timeout even offline; payouts wait for the player.

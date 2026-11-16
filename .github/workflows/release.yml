@@ -1,0 +1,92 @@
+name: Publish verified binary release
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - public
+    paths:
+      - RELEASE_NOTES.md
+      - .github/workflows/release.yml
+permissions:
+  contents: write
+jobs:
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v') && github.event.deleted != true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out public documentation and prebuilt binary
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Verify release artifact checksum
+        working-directory: dist
+        run: sha256sum --check SHA256SUMS.txt
+      - name: Publish release with JAR only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release download "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+              --pattern "RollPlugin-$VERSION.jar" --pattern SHA256SUMS.txt \
+              --dir "$RUNNER_TEMP/existing-release"
+            cmp "dist/RollPlugin-$VERSION.jar" "$RUNNER_TEMP/existing-release/RollPlugin-$VERSION.jar"
+            cmp dist/SHA256SUMS.txt "$RUNNER_TEMP/existing-release/SHA256SUMS.txt"
+            gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" --notes-file RELEASE_NOTES.md --latest
+          else
+            gh release create "$GITHUB_REF_NAME" \
+              --repo "$GITHUB_REPOSITORY" \
+              --verify-tag \
+              --target "$GITHUB_SHA" \
+              --title "RollPlugin $VERSION" \
+              --notes-file RELEASE_NOTES.md \
+              --draft=false \
+              --prerelease=false \
+              --latest \
+              "dist/RollPlugin-$VERSION.jar" \
+              dist/SHA256SUMS.txt
+          fi
+      - name: Hide older releases reversibly as drafts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+            --jq '.[] | select(.draft == false) | [.id, .tag_name] | @tsv' |
+          while IFS=$'\t' read -r RELEASE_ID RELEASE_TAG; do
+            if [ "$RELEASE_TAG" != "$GITHUB_REF_NAME" ]; then
+              gh api --method PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" \
+                -F draft=true --silent
+              test "$(gh api "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" --jq '.draft')" = true
+              printf 'Hidden older release as draft: %s\n' "$RELEASE_TAG"
+            fi
+          done
+          test "$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq '.tag_name')" = "$GITHUB_REF_NAME"
+
+  update-release-notes:
+    if: github.ref == 'refs/heads/public'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current documentation
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Synchronize current release description
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          shopt -s nullglob
+          ARTIFACTS=(dist/RollPlugin-*.jar)
+          test "${#ARTIFACTS[@]}" = 1
+          VERSION="${ARTIFACTS[0]#dist/RollPlugin-}"
+          VERSION="${VERSION%.jar}"
+          if ! gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            printf 'Release will be published by its tag workflow.\n'
+            exit 0
+          fi
+          gh release edit "v$VERSION" --repo "$GITHUB_REPOSITORY" --notes-file RELEASE_NOTES.md
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/v$VERSION" > "$RUNNER_TEMP/release-body.json"
+          python3 -c 'import json,os,pathlib; actual=json.loads((pathlib.Path(os.environ["RUNNER_TEMP"])/"release-body.json").read_text()); assert actual["body"]==pathlib.Path("RELEASE_NOTES.md").read_text()'
